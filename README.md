@@ -1,0 +1,2 @@
+# mazonDoc
+Guia da MazonOS
