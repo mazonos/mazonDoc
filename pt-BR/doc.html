@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Mazon OS Guia</title>
+	<meta charset="utf-8">
+	<style>
+		body{font-size: 15px; color: #232323;font-family: "liberation sans", "Myriad ", "Bitstream Vera Sans", "Lucida Grande", "Luxi Sans", "Trebuchet MS", helvetica, verdana, arial, sans-serif; margin-left: 4%; margin-right: 4%;}
+		#principal{margin-left: 5%; margin-right: 5%;}
+		.separator{margin-top: 5%; margin-bottom: 5%;}
+		nav{font-size: 1.2em; text-align: center;}
+		li#categoria{margin: 0.5%; margin-top: 2%;}
+		.doctitle{background-color: #ebebeb; color: #1a1a1a;padding: 2%;}
+		footer{margin-left: 10%; margin-right: 10%; margin-top: 10%;}
+		pre{background-color: #555555; color: white; padding: 2%; box-shadow: -2px 2px 5px 1px #c5c5c5; border-radius: 5px;}
+		img{width: 45% ;}
+	</style>
+</head>
+<body>
+	<nav>
+		<h1>Mazon OS - Um guia Simples</h1>
+		<p>Para a sua inicialização no sistema de uma forma prática e divertida!</p>
+	</nav>
+<hr>
+
+<div id='principal'>
+
+<h2>Índice</h2>
+<ol>
+	<li id="categoria"><b>Prefácio</b></li>
+	<ul>
+		<li><a href="#oqueémazonos">O que é Mazon OS?</a></li>
+		<li><a href="#AFilosofia">A Filosofia</a></li>
+		<li><a href="#GerenciadorUtilizado">Qual o Gerenciador de pacotes utilizado?</a></li>
+	</ul>
+	<li id="categoria"><b>Instalação</b></li>
+	<ul>
+		<li><a href="#InstalacaoManual">Na unha</a></li>
+		<li><a href="#InstalacaoInterfaceGrafica">Com Interface Gráfica</a></li>
+	</ul>
+	<li id="categoria"><b>Pós Instalação</b></li>
+	<ul>
+		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
+		<li><a href="#PosInstalacao">Ajustar Teclado</a></li>
+		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
+		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
+	</ul>
+</ol>
+
+<hr class="separator">
+
+<h2>Prefácio</h2>
+
+
+<!--
+	##############################
+	***** O QUE É MAZON OS	***** 
+	##############################
+-->
+<h3 id="oqueémazonos" class="doctitle">O que é MazonOS?</h3>
+<p>
+MazonOS é um sistema operacional GNU/Linux com base no Livro LFS.
+Criada para suprir uma necessidade única e segue a filosofia KISS (Keep it simple Stupid).
+</p>
+
+<p>
+O nosso maior diferencial é que não tentamos imitar nenhuma outra distribuição! Andamos com nossas próprias pernas.
+</p>
+
+<!--
+	##############################
+	***** A FILOSOFIA    	 ***** 
+	##############################
+-->
+<h3 id="AFilosofia" class="doctitle">A Filosofia</h3>
+<p>
+A filosofia que o projeto segue é a KISS do inglês <u>Keep It Simple Stupid</u> que em português significa Matenha/fique no simples estúpido.<br>
+Ou seja, toda complexidade e camadas desnecessárias são descartadas!
+</p>
+
+<p>
+Com a MazonOS o usuário tem o total controle do seu sistema.
+</p>
+
+<!--
+	##############################
+	***** GERENCIADOR UTILIZADO ** 
+	##############################
+-->
+<h3 id="GerenciadorUtilizado" class="doctitle">Qual o Gerenciador de pacotes utilizado?</h3>
+
+<p>
+É utilizado o <a href="https://bananapkg.github.io/" target="_blank">bananapkg</a> em baixo nível e em alto nível o mz.<br>
+O bananapkg é responsável por gerenciar os pacotes, para uma breve comparação é como os gerenciadores (rpm, dpkg, pkgtool).
+Então com o bananapkg é possível <b>(criar, instalar, atualizar, remover e procurar).</b><br>
+Assim como todo gerenciador de baixo nível, ele não resolve dependência.
+</p>
+
+<p>
+Já com a ferramenta mz é possível (baixar, instalar, atualizar) pacotes via Internet.
+Porém também não resolve dependências. 
+</p>
+
+<hr class="separator">
+
+<h2>Instalação</h2>
+
+<!--
+	##############################
+	***** INSTALAÇÃO MANUAL	 ***** 
+	##############################
+-->
+<h3 id="InstalacaoManual" class="doctitle">Instalação Manual</h3>
+<p>
+A instalação manual da mazon é bem parecida com a distribuição Arch Linux. Como pré-requisito para este tipo de instalação você irá necessitar da LiveCD da Mazon <b>ou</b> uma outra distribuição GNU/Linux já instalada...
+</p>
+
+<p>
+O primeiro passo é criar a(s) partições que você irá necessitar, em nosso caso por uma questão de exemplo vamos utilizar somente uma partição para raiz <b>/</b>.<br>
+<b>* Se você estiver utilizando EFI crie primeiro uma partição no tipo <u>EFI</u></b>.
+</p>
+
+<p>
+Vamos formatar a partição raiz / com o filesystem ext4, fica do seu gosto decidir qual melhor filesystem.
+</p>
+<pre>
+<b>mkfs.ext4</b> /dev/sdx(x)
+</pre>
+
+<p>
+Se caso você estiver utilizando o EFI.
+</p>
+
+<pre>
+<b>mkfs.fat</b> -F32 /dev/sdx(x)
+</pre>
+
+<p>
+Próxima etapa é montar a partição que você escolheu para ser a <b>raiz /</b> do sistema.<br>
+Vamos utilizar o diretório <b>/mnt</b> para isto.
+</p>
+
+<pre>
+<b>mount</b> /dev/sdx(x) /mnt
+</pre>
+
+<p>
+Se você está usando EFI
+</p>
+
+<pre>
+<b>mount</b> /dev/sdx(x) /mnt/boot/EFI
+</pre>
+
+
+<p>
+Vamos descompactar o tarzão comprimido em /mnt, assim seu sistema já praticamente está instalado ;)<br>
+Aguarde que o processo pode ser um pouquinho demorado... Recomendo ir fazer uma pipoca.
+</p>
+
+<pre>
+<b>tar</b> xJpvf /Diretorio/do/pacote/mazonos.tar.xz -C /mnt
+</pre>
+
+<p>
+Ufa, não demorou tanto tempo assim não é? Bom, vamos agora entrar no diretório <b>/mnt</b> para montar o /proc /dev /sys.<br>
+Em seguida vamos entrar como chroot.
+</p>
+
+<pre>
+<b>mount</b> --type proc /proc proc/
+
+<b>mount</b> --rbind /dev dev/
+
+<b>mount</b> --rbind /sys sys/
+
+<b>mount</b> --rbind /run run/
+
+<b>chroot</b> /mnt
+</pre>
+
+<p>
+Agora você está dentro do seu sistema Mazon, fácil não? vamos editar o arquivo /etc/<b>fstab</b>.<br>
+Na chamada você irá precisar editar de acordo aonde está seu sistema raiz... Para um exemplo, usamos a partição /dev/sda1.<br>
+Use o seu editor de texto favorito para editar o /etc/fstab.
+</p>
+
+<p>
+Um exemplo do /etc/fstab com a partição raiz <b>/dev/sda1</b>.
+</p>
+
+<pre>
+/dev/<b>sda1</b> / ext4  defaults  1  1
+</pre>
+
+<p>
+Se caso você ter mais partições que estão <b>separadas</b> como <b>home</b> por exemplo, adicione também! É IMPORTANTE.<br>
+Exemplo:
+</p>
+
+<pre>
+# RAIZ
+/dev/sda1  /     ext4  defaults  1  1
+
+# Home
+/dev/sda2  /home ext4  defaults  1  2
+</pre>
+
+<p>
+Cara, está muito fácil tudo isso! Agora chegou a hora de finalizar com o <b>grub</b>...<br>
+Se você deseja usar o grub da Mazon siga o passo abaixo:
+</p>
+
+<p>
+Instale o grub no seu dispositivo de origem. Se caso for sdb1 por exemplo, normalmente a origem é /dev/<b>sdb</b>.
+A lógica é esta :).<br>
+E se for /dev/sdc1? Então seria /dev/sdc. Se caso você esteja confuso, utilize o comando <b>lsblk</b> para fazer a listagem dos dispositivos.
+</p>
+
+<h3>MazonOS Grub</h3>
+
+<pre>
+<b>grub-install</b> /dev/sd(x)
+</pre>
+
+<p>
+Se você fez a instalação no modo EFI, você precisa instalar o grub com este comando:
+</p>
+
+<pre>
+<b>grub-install</b> --target=x86_64-efi --bootloader-id=mazon --recheck
+</pre>
+
+<p>
+Crie também o cfg do grub.
+</p>
+
+<pre>
+<b>grub-mkconfig</b> -o /boot/grub/grub.cfg
+</pre>
+
+<p>
+E para a finalização de tudo, vamos sair do <b>chroot</b> e desmontar a partição que estão montada em /mnt.
+</p>
+
+<pre>
+<b>exit</b>
+<b>umount</b> -Rl /mnt
+</pre>
+
+<p>
+Reinicie seu sistema!
+</p>
+
+<h3>DualBoot + Grub</h3>
+<p>
+Se você está instalando a Mazon em <b>dualboot</b>, apenas saia do chroot, desmonte a partição e atualize seu grub do sistema principal.
+</p>
+
+<pre>
+<b>exit</b>
+
+<b>umount</b> -Rl /mnt
+
+<b>update-grub</b>
+</pre>
+
+<p>
+Reinicie seu sistema!
+</p>
+
+
+<!--
+	#####################################
+	***** INSTALAÇÃO Interface Gráfica ** 
+	#####################################
+-->
+<h3 id="InstalacaoInterfaceGrafica" class="doctitle">Instalação Interface Gráfica</h3>
+
+<p>
+A facilidade que você tem de instalar a Mazon em modo automático, não perde para nenhuma outra distribuição de grande porte.<br>
+Em algumas poucas etapas você já tem o seu sistema em atividade.
+</p>
+
+<p>
+Ao abrir a LiveCD, você vai se deparar com um icone presente na <b>Área de Trabalho</b> chamado <b>Install-Mazon</b>.
+Clique neste icone para iniciar a sua aventura.
+</p>
+<img src='../img/1.png' class='img'>
+
+<h3>Tela de Boas vindas</h3>
+<p>
+Irá abrir uma tela de boas vindas, avance para o próximo nível clicando em <b>Ok</b>
+</p>
+<img src='../img/2.png' class='img'>
+
+<h3>Selecionar Mapa Teclado</h3>
+<p>
+Selecione o Mapa do seu teclado, na imagem para exemplo utilizamos o padrão de quase todos Brasileiros: <b>pt_BR.UTF-8.UTF-8</b> e Teclado <b>br-abnt2</b>.<br>
+</p>
+<img src='../img/3.png' class='img'>
+
+<h3>Criação Usuário + Senha</h3>
+<p>
+Chegou a hora de criar seu usuário comum e a senha, lembre-se de criar uma senha segura de 12 digitos mais.
+</p>
+<img src='../img/4.png' class='img'>
+
+<h3>Dispositivo para instalação do sistema</h3>
+<p>
+Selecione o Dispositivo/HD aonde será instalado o seu sistema!<br>
+Automaticamente ele faz a listagem, tome cuidado... Principalmente se você estiver em Dual boot.<br>
+Se você estiver com dúvida, abra o terminal e utilize o comando <b>lsblk</b> para fazer a listagem de todos dispositivos.
+</p>
+<img src='../img/5.png' class='img'>
+
+<h3>Cuidado! Seus dados serão destruidos.</h3>
+<p>
+Não preciso comentar que os dados da partição serão literalmente destruidos.
+</p>
+<img src='../img/6.png' class='img'>
+
+<h3>Breve Resumo da instalação</h3>
+<p>
+O instalador lhe envia um resumo básico de toda instalação, se tudo estiver correto clique em <b>Ok</b>.
+</p>
+<img src='../img/7.png' class='img'>
+
+<h3>Vá comer uma pipoca</h3>
+<p>
+A instalação não é tão demorada! Pode demorar de 3 á 10 minutos. Isto vai variar de qual equipamento você tem.<br>
+Vá comer uma pipoca, por um café para passar ou até mesmo passear com seu dog!
+</p>
+
+<img src='../img/8.png' class='img'>
+
+<h3>Instalação da Mazon Grub</h3>
+<p>
+Chegou a hora da instalação do Grub, o instalador lhe envia os dispositivos para onde você pode instalar o grub!
+</p>
+<img src='../img/9.png' class='img'>
+
+<h3>Criando arquivo de configuração .cfg</h3>
+<p>
+O instalador vai criar um arquivo de configuração do grub <b>.cfg</b>.
+Coisa rápida! Nem esquenta.
+</p>
+<img src='../img/10.png' class='img'>
+
+<h3>Instalação Finalizada</h3>
+<p>
+Se você chegou nesta tela é só reiniciar sua máquina e usufruir do que a mazon tem a te oferecer!<br>
+</p>
+<img src='../img/11.png' class='img'>
+
+
+<hr class="separator">
+
+<!--
+	#####################################
+	***** PÓS INSTALAÇÃO
+	#####################################
+-->
+
+<h2>Pós Instalação</h2>
+
+
+</div>
+<footer>
+	<hr>
+	<p><b>Autor:</b> Jefferson 'slackjeff' Rocha</p>
+	<p><b>Atualização:</b> 26/05/2019</p>
+</footer>
+
+</body>
+</html>
