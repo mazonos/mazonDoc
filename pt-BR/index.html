@@ -39,10 +39,8 @@
 	</ul>
 	<li id="categoria"><b>Pós Instalação</b></li>
 	<ul>
-		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
-		<li><a href="#PosInstalacao">Ajustar Teclado</a></li>
-		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
-		<li><a href="#PosInstalacao">Trocar senha do Root</a></li>
+		<li><a href="#TrocarSenhaRoot">Trocar a senha do Super Usuário Root</a></li>
+		<li><a href="#AjutarTeclado">Ajustar o Teclado</a></li>
 	</ul>
 </ol>
 
@@ -274,7 +272,7 @@ Reinicie seu sistema!
 	***** INSTALAÇÃO Interface Gráfica ** 
 	#####################################
 -->
-<h3 id="InstalacaoInterfaceGrafica" class="doctitle">Instalação Interface Gráfica</h3>
+<h3 id="InstalacaoInterfaceGrafica" class="doctitle">Instalação Com Interface Gráfica</h3>
 
 <p>
 A facilidade que você tem de instalar a Mazon em modo automático, não perde para nenhuma outra distribuição de grande porte.<br>
@@ -362,6 +360,112 @@ Se você chegou nesta tela é só reiniciar sua máquina e usufruir do que a maz
 -->
 
 <h2>Pós Instalação</h2>
+<h3 id="TrocarSenhaRoot" class="doctitle">Trocar a senha do Super Usuário Root</h3>
+<p>
+A primeira coisa que você deve fazer é adicionar uma senha ao super usuário root.<br>
+Isso é uma questão de segurança... Crie uma senha com 12 digitos mais e que seja 
+aleátoria.<br>
+Evite o uso da sua data de aniversário, nome da mãe, nome da rua onde você mora por exemplo, isso é péssimo.
+</p>
+
+<p>
+Para trocar a senha do root utilize o comando <b>passwd</b>. Será pedido a senha 3 vezes.
+</p>
+
+<pre>
+# <b>passwd</b> root
+passwd root
+Modificando a senha para root
+Informe a nova senha (mínimo de 5 caracteres)
+Por favor, use uma combinação de letras em maiúsculas e minúsculas
+e de números.
+Nova senha : 
+</pre>
+
+
+<h3 id="AjutarTeclado" class="doctitle">Ajustar o Teclado</h3>
+<p>
+Se você fez a instalação da Mazon via Interface gráfica, você configurou o seu teclado mas para a parte do CLI.<br>
+O seu ambiente gráfico fica desconfigurado na questão do teclado. Para isso vamos fazer um ajuste para você e para não utilizar e depender da interface vamos fazer esse ajuste via linha de comando.
+</p>
+
+<p>
+Temos várias formas de fazer o ajuste do teclado! A forma mais fácil e rápida seria criando um arquivo em <b>/etc/X11/xorg.conf.d/</b> chamado <b>90-keyboard-layout.conf</b>.<br> Esta configuração será global!<br>
+Por padrão este arquivo não existe, vamos criar com o cat um heredocument.
+</p>
+
+<pre>
+# <b>cat</b> > '/etc/X11/xorg.conf.d/90-keyboard-layout.conf' << EOF
+Section "InputClass"
+    Identifier "keyboard-all"
+    MatchIsKeyboard "on"
+    MatchDevicePath "/dev/input/event*"
+    Driver "evdev"
+    Option "XkbLayout" "<b>br</b>"
+    #Option "XkbVariant" ""
+    Option "XkbOptions" "terminate:ctrl_alt_bksp"
+EndSection
+EOF
+</pre>
+
+<p>
+Perceba que na linha <u>Option "XkbLayout" "<b>br</b>"</u> está setado o <b>br</b>, é ele responsável por deixar nosso teclado ajustado.<br>
+Reinicie sua máquina e seu teclado vai estar ajustado.
+</p>
+
+<p>
+Uma outra forma seria por para auto iniciar um script quando o <b>xfce</b> é carregado.
+O comando a ser executado seria o <b>setxkbmap</b>.<br>
+Você pode inserir uma chamada em seu Home em: <b>~/.config/autostart/</b>. 
+</p>
+
+<p>
+Particulamente eu acho desnecessário fazer uma volta tão grande assim. Mas é bom para mostrar para você que dá. Exemplo:
+</p>
+
+<pre>
+$ <b>cat</b> > "~/.config/autostart/keymapx.desktop" << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Version=1
+Type=Application
+Name=KeymapX
+Comment=Ajuste Teclado para abtn2
+Exec=/usr/bin/keymapx.sh
+StartupNotify=false
+Terminal=true
+Hidden=false
+EOF
+</pre>
+
+<p>
+Vamos criar um Script para fazer está ação de ajustar o teclado! Você pode logar como root e fazer diretamente do diretório <b>/usr/bin/</b>.
+</p>
+
+<pre>
+# <b>cat</b> > "/usr/bin/keymapx.sh" << EOF
+#!/bin/bash
+# Ajusta o teclado para abnt2
+
+# Pegando localização do setxkbmap
+SETX="$(which setxkbmap)"
+
+# Execução
+$SETX -model abnt2 -layout br
+EOF
+</pre>
+
+<p>
+Em seguida dê permissão de execução para este script:
+</p>
+
+<pre>
+# chmod +x /usr/bin/keymapx.sh
+</pre>
+
+<p>
+Feito isso ao iniciar a sua interface XFCE, o seu teclado será configurado.
+</p>
 
 
 </div>
